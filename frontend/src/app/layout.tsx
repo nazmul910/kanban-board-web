@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono ,Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { ReduxProvider } from "../redux/provider";
 import React from "react";
+
+const playfairDisplay = Playfair_Display({
+  variable: "--font-playfair-display",
+  subsets: ["latin"],
+  weight: "700",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +33,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-[#090a0f] text-gray-100 selection:bg-emerald-500 selection:text-black">
         <ReduxProvider>{children}</ReduxProvider>

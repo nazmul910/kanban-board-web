@@ -63,7 +63,7 @@ export default function BoardPage({
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#090a0f]">
+    <div className="min-h-screen  flex flex-col bg-[#090a0f]">
       <Navbar />
       <BoardWorkspace
         key={board.id}

@@ -29,7 +29,7 @@ export function ConfirmModal({
   isLoading = false,
   iconType = "warning",
 }: ConfirmModalProps) {
-  // Close on Escape key press
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen && !isLoading) {
@@ -80,14 +80,12 @@ export function ConfirmModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200">
-      {/* Backdrop overlay */}
       <div
         onClick={isLoading ? undefined : onClose}
         className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity"
         aria-hidden="true"
       />
 
-      {/* Modal Dialog Card */}
       <div
         role="dialog"
         aria-modal="true"
@@ -98,12 +96,11 @@ export function ConfirmModal({
         <div
           className={`absolute top-0 left-0 right-0 h-1 rounded-t-2xl ${
             variant === "destructive"
-              ? "bg-gradient-to-r from-red-500/60 via-red-500 to-rose-400/60"
-              : "bg-gradient-to-r from-emerald-500/60 via-emerald-400 to-teal-400/60"
+              ? ""
+              : "bg-linear-to-r from-emerald-500/60 via-emerald-400 to-teal-400/60"
           }`}
         />
 
-        {/* Professional Cross / Close Icon */}
         <button
           type="button"
           onClick={onClose}
@@ -114,7 +111,6 @@ export function ConfirmModal({
           <X className="h-4 w-4" strokeWidth={2.2} />
         </button>
 
-        {/* Modal Body */}
         <div className="flex flex-col items-center text-center sm:items-start sm:text-left sm:flex-row gap-4 pt-2">
           <div className="shrink-0">{renderIcon()}</div>
           <div className="space-y-1.5 flex-1 pr-6">
@@ -130,7 +126,6 @@ export function ConfirmModal({
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="mt-6 flex flex-col-reverse sm:flex-row sm:justify-end gap-2.5">
           <Button
             type="button"

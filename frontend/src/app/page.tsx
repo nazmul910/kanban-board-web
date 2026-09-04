@@ -68,8 +68,7 @@ export default function HomePage() {
       <Navbar />
 
       <main className="flex-1 flex flex-col justify-center items-center p-4 sm:p-6 lg:p-8 relative overflow-hidden">
-        {/* Matrix background pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#161b22_1px,transparent_1px),linear-gradient(to_bottom,#161b22_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-25 pointer-events-none" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#161b22_1px,transparent_1px),linear-gradient(to_bottom,#161b22_1px,transparent_1px)] bg-size-[4rem_4rem] mask-[radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-25 pointer-events-none" />
 
         {!isAuthenticated ? (
           <div className="w-full flex flex-col items-center justify-center py-6">
@@ -86,10 +85,9 @@ export default function HomePage() {
           </div>
         ) : (
           <div className="w-full max-w-5xl mx-auto py-6 space-y-6 relative z-10">
-            {/* Dashboard Welcome Header */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-6 rounded-2xl bg-[#0d1117]/90 border border-[#21262d] shadow-xl backdrop-blur-md">
-              <div className="flex items-center gap-4">
-                <div className="h-14 w-14 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-xl emerald-glow-sm">
+              <div className="grid md:flex items-center gap-4">
+                <div className="h-14 w-14 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-xl emerald-glow-sm">
                   {user?.name ? user.name[0].toUpperCase() : "U"}
                 </div>
                 <div>
@@ -97,12 +95,9 @@ export default function HomePage() {
                     <h2 className="text-xl sm:text-2xl font-black text-white">
                       Welcome back, {user?.name}
                     </h2>
-                    <Badge variant="emerald" className="text-[10px]">
-                      Active Workspace
-                    </Badge>
                   </div>
                   <p className="text-xs text-gray-400 mt-1">
-                    Manage your active boards, collaborate, and track real-time progress.
+                    Manage your active boards, collaborate, and progress.
                   </p>
                 </div>
               </div>
@@ -156,26 +151,6 @@ export default function HomePage() {
                   </div>
                   <p className="text-[11px] text-gray-400 mt-1">
                     Total member connections
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="border border-[#21262d] bg-[#0d1117]/80 hover:border-emerald-500/30 transition-all duration-200">
-                <CardHeader className="p-5 pb-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                      System Status
-                    </span>
-                    <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                  </div>
-                </CardHeader>
-                <CardContent className="p-5 pt-0">
-                  <div className="text-2xl font-extrabold text-emerald-400 flex items-center gap-1.5">
-                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                    Online
-                  </div>
-                  <p className="text-[11px] text-gray-400 mt-1">
-                    Real-time synchronization active
                   </p>
                 </CardContent>
               </Card>

@@ -56,15 +56,15 @@ export function CreateBoardModal({
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-4 top-4 h-8 w-8 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
+          className="absolute right-4 top-4 h-8 w-8 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 active:scale-95 group transition-all cursor-pointer"
           aria-label="Close dialog"
         >
-          <X className="h-4 w-4" strokeWidth={2.2} />
+          <X className="h-4 duration-200 group-hover:text-red-500 w-4" strokeWidth={2.2} />
         </button>
 
         <div className="flex items-center gap-3">
           <div className="h-10 w-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 emerald-glow-sm">
-            <Kanban className="h-5 w-5" />
+            <Kanban className="h-5 w-5 rotate-180" />
           </div>
           <div>
             <h3 className="text-lg font-bold text-white">Create New Board</h3>
@@ -84,7 +84,7 @@ export function CreateBoardModal({
             <Input
               id="board-title"
               type="text"
-              placeholder="e.g. Sprint 24, Marketing Launch..."
+              placeholder="Enter Board Title..."
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
@@ -94,7 +94,7 @@ export function CreateBoardModal({
           </div>
 
           <div className="p-3 rounded-xl bg-[#161b22] border border-[#262f3a] flex items-center gap-2 text-[11px] text-gray-400">
-            <Sparkles className="h-4 w-4 text-emerald-400 shrink-0" />
+
             <span>
               Includes standard columns: <strong>To Do</strong>, <strong>In Progress</strong>, and <strong>Done</strong>.
             </span>

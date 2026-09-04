@@ -80,7 +80,6 @@ export function BoardWorkspace({
   const [deleteBoard] = useDeleteBoardMutation();
   const [updateBoard] = useUpdateBoardMutation();
 
-  // Local drag-and-drop state with instant server prop synchronization
   const [columns, setColumns] = useState<IColumn[]>(board.columns || []);
   const [prevColumnsProp, setPrevColumnsProp] = useState(board.columns);
 
@@ -92,22 +91,16 @@ export function BoardWorkspace({
   const [activeTask, setActiveTask] = useState<ITask | null>(null);
   const [originalColumnId, setOriginalColumnId] = useState<string | null>(null);
 
-  // Modals
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isActivityDrawerOpen, setIsActivityDrawerOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<ITask | null>(null);
 
-  // Confirmation Modals
   const [columnToDelete, setColumnToDelete] = useState<string | null>(null);
   const [taskToDelete, setTaskToDelete] = useState<ITask | null>(null);
   const [isDeleteBoardModalOpen, setIsDeleteBoardModalOpen] = useState(false);
-
-  // Form states
   const [isAddingColumn, setIsAddingColumn] = useState(false);
   const [newColumnTitle, setNewColumnTitle] = useState("");
   const [isSubmittingColumn, setIsSubmittingColumn] = useState(false);
-
-  // Board Title edit & sync
   const [isEditingBoardTitle, setIsEditingBoardTitle] = useState(false);
   const [boardTitle, setBoardTitle] = useState(board.title);
   const [prevBoardTitle, setPrevBoardTitle] = useState(board.title);
@@ -116,7 +109,6 @@ export function BoardWorkspace({
     setBoardTitle(board.title);
   }
 
-  // Sensor
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -125,14 +117,12 @@ export function BoardWorkspace({
     })
   );
 
-  // Helper to find a column by id (either column ID or task ID)
   const findColumn = (id: string, cols: IColumn[]): IColumn | undefined => {
     const directCol = cols.find((c) => c.id === id);
     if (directCol) return directCol;
     return cols.find((c) => c.tasks.some((t) => t.id === id));
   };
 
-  // Robust Collision Detection: Checks pointerWithin first, falls back to closestCorners
   const collisionDetectionStrategy: CollisionDetection = (args) => {
     const pointerCollisions = pointerWithin(args);
     if (pointerCollisions.length > 0) {
@@ -167,7 +157,6 @@ export function BoardWorkspace({
 
     if (!activeCol || !overCol) return;
 
-    // Moving between DIFFERENT columns during DragOver
     if (activeCol.id !== overCol.id) {
       setColumns((prevCols) => {
         const srcCol = prevCols.find((c) => c.id === activeCol.id);
@@ -217,7 +206,6 @@ export function BoardWorkspace({
     const destinationColumnId = activeCol.id;
     let destinationIndex = 0;
 
-    // Check if reordering within the same column
     if (sourceColId === activeCol.id && overCol && overCol.id === activeCol.id) {
       const oldIndex = activeCol.tasks.findIndex((t) => t.id === activeId);
       const newIndex = activeCol.tasks.findIndex((t) => t.id === overId);
@@ -231,11 +219,11 @@ export function BoardWorkspace({
         );
         destinationIndex = newIndex;
       } else if (oldIndex !== -1) {
-        // Did not change position
+
         return;
       }
     } else {
-      // Moved across columns
+
       const idx = activeCol.tasks.findIndex((t) => t.id === activeId);
       destinationIndex = idx !== -1 ? idx : activeCol.tasks.length;
     }
@@ -282,9 +270,9 @@ export function BoardWorkspace({
 
   return (
     <div className="flex flex-col h-[calc(100vh-64px)] w-full overflow-hidden bg-[#090a0f]">
-      {/* Board Sub-header / Toolbar */}
-      <div className="px-4 sm:px-6 py-3 border-b border-[#21262d] bg-[#0d1117]/80 backdrop-blur-md flex flex-wrap items-center justify-between gap-3 shrink-0">
-        <div className="flex items-center gap-3 flex-1 min-w-[200px]">
+      <div className="px-4 py-3 border-b  border-[#21262d] bg-[#0d1117]/80 backdrop-blur-md flex flex-wrap items-center justify-between gap-3 shrink-0">
+        <div className="flex items-center justify-between max-w-6xl w-full mx-auto">
+          <div className="flex items-center gap-3 flex-1 min-w-50">
           <button
             type="button"
             onClick={onBackToDashboard}
@@ -352,7 +340,6 @@ export function BoardWorkspace({
           )}
         </div>
 
-        {/* Action Controls */}
         <div className="flex items-center gap-2">
           <Button
             variant="secondary"
@@ -389,10 +376,10 @@ export function BoardWorkspace({
             </Button>
           )}
         </div>
+        </div>
       </div>
 
-      {/* Columns Area */}
-      <div className="flex-1 overflow-x-auto p-4 sm:p-6 select-none">
+      <div className="flex-1 overflow-x-auto p-4 mx-auto sm:p-6 select-none">
         <DndContext
           sensors={sensors}
           collisionDetection={collisionDetectionStrategy}
@@ -400,7 +387,7 @@ export function BoardWorkspace({
           onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}
         >
-          <div className="flex items-start gap-4 h-full pb-4">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4  pb-4">
             {columns.map((column) => (
               <KanbanColumn
                 key={column.id}
@@ -427,7 +414,7 @@ export function BoardWorkspace({
             ))}
 
             {canEdit && (
-              <div className="w-[280px] shrink-0">
+              <div className="w-70 shrink-0">
                 {isAddingColumn ? (
                   <form
                     onSubmit={handleAddColumn}
@@ -493,7 +480,6 @@ export function BoardWorkspace({
         </DndContext>
       </div>
 
-      {/* Task Detail Modal */}
       <TaskDetailModal
         key={editingTask?.id || "none"}
         task={editingTask}
@@ -514,7 +500,6 @@ export function BoardWorkspace({
         }}
       />
 
-      {/* Share Board Modal */}
       <ShareBoardModal
         board={board}
         isOpen={isShareModalOpen}
@@ -522,14 +507,12 @@ export function BoardWorkspace({
         onClose={() => setIsShareModalOpen(false)}
       />
 
-      {/* Activity Timeline Drawer */}
       <ActivityDrawer
         boardId={board.id}
         isOpen={isActivityDrawerOpen}
         onClose={() => setIsActivityDrawerOpen(false)}
       />
 
-      {/* Confirm Modal for Delete Task */}
       <ConfirmModal
         isOpen={!!taskToDelete}
         onClose={() => setTaskToDelete(null)}
@@ -549,7 +532,6 @@ export function BoardWorkspace({
         cancelText="Cancel"
       />
 
-      {/* Confirm Modal for Delete Column */}
       <ConfirmModal
         isOpen={!!columnToDelete}
         onClose={() => setColumnToDelete(null)}
@@ -569,7 +551,6 @@ export function BoardWorkspace({
         cancelText="Cancel"
       />
 
-      {/* Confirm Modal for Delete Board */}
       <ConfirmModal
         isOpen={isDeleteBoardModalOpen}
         onClose={() => setIsDeleteBoardModalOpen(false)}

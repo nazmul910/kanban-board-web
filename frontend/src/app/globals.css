@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  /* Centralized Black & Emerald Green Design System */
+
   --background: #090a0f;
   --foreground: #f3f4f6;
 
@@ -33,6 +33,12 @@
   --radius: 0.75rem;
 }
 
+@theme{
+  --font-sans: "Geist Sans", sans-serif;
+  --font-mono: "Geist Mono", monospace;
+  --font-playfair-display: "Playfair Display", serif;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -62,7 +68,6 @@ body {
   min-height: 100vh;
 }
 
-/* Custom Scrollbar for Kanban Columns */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -81,7 +86,6 @@ body {
   background: #10b981;
 }
 
-/* Glassmorphism utility */
 .glass-panel {
   background: rgba(13, 17, 23, 0.75);
   backdrop-filter: blur(12px);
