@@ -7,9 +7,8 @@ const app_1 = __importDefault(require("./app"));
 const config_1 = __importDefault(require("./config"));
 const port = config_1.default.port;
 const server = app_1.default.listen(port, () => {
-    console.log(`🚀 Server is running on port ${port}`);
-    console.log(`📍 Environment: ${config_1.default.env}`);
-    console.log(`🌐 http://localhost:${port}`);
+    console.log(`Server is running on port ${port}`);
+    console.log(`Environment: ${config_1.default.env}`);
 });
 process.on("SIGTERM", () => {
     console.log("SIGTERM signal received");

@@ -4,9 +4,8 @@ import config from "./config";
 const port = config.port;
 
 const server = app.listen(port, () => {
-  console.log(`🚀 Server is running on port ${port}`);
-  console.log(`📍 Environment: ${config.env}`);
-  console.log(`🌐 http://localhost:${port}`);
+  console.log(`Server is running on port ${port}`);
+  console.log(`Environment: ${config.env}`);
 });
 
 process.on("SIGTERM", () => {

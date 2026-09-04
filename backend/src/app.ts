@@ -27,11 +27,8 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-// Mount routes for both /api and /api/v1
-app.use("/api", router);
 app.use("/api/v1", router);
 
-// Error handlers
 app.use(notFound);
 app.use(globalErrorHandler);
 

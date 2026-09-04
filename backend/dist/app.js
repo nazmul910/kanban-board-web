@@ -24,10 +24,7 @@ app.get("/", (req, res) => {
         message: "Mini Kanban Board Backend API is running",
     });
 });
-// Mount routes for both /api and /api/v1
-app.use("/api", routes_1.default);
 app.use("/api/v1", routes_1.default);
-// Error handlers
 app.use(notFound_1.default);
 app.use(globalErrorHandler_1.default);
 exports.default = app;
