@@ -29,7 +29,7 @@ services:
       PORT: 5000
       NODE_ENV: production
       DATABASE_URL: "postgresql://postgres:password@postgres:5432/kanban_db?schema=public"
-      JWT_ACCESS_SECRET: "kanban_super_secret_jwt_key_assessment_2026"
+      JWT_ACCESS_SECRET: "fgsdfgsfg-adfladfa-adfadf"
       JWT_ACCESS_EXPIRES_IN: "7d"
       SALT_ROUNDS: 12
       FRONTEND_URL: "http://localhost:3000"
