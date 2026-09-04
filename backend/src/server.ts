@@ -1,5 +1,5 @@
 import app from "./app";
-import config from "./app/config";
+import config from "./config";
 
 const port = config.port;
 
@@ -8,8 +8,6 @@ const server = app.listen(port, () => {
   console.log(`📍 Environment: ${config.env}`);
   console.log(`🌐 http://localhost:${port}`);
 });
-
-
 
 process.on("SIGTERM", () => {
   console.log("SIGTERM signal received");
