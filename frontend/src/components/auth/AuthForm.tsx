@@ -6,7 +6,8 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import { CheckCircle2, Kanban, Lock, Mail, ShieldAlert, User, X } from "lucide-react";
+import { Kanban, Lock, Mail, User } from "lucide-react";
+import { toast } from "sonner";
 
 interface AuthFormProps {
   onSuccess?: () => void;
@@ -24,8 +25,6 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const [login, { isLoading: isLoginLoading }] = useLoginMutation();
   const [register, { isLoading: isRegisterLoading }] = useRegisterMutation();
@@ -34,17 +33,14 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrorMessage(null);
-    setSuccessMessage(null);
-
     try {
       if (isLogin) {
         const res = await login({ email, password }).unwrap();
-        setSuccessMessage(res.message || "Logged in successfully!");
+        toast.success(res.message || "Logged in successfully!");
         if (onSuccess) onSuccess();
       } else {
         await register({ name, email, password }).unwrap();
-        setSuccessMessage("Account created successfully. You can now sign in.");
+        toast.success("Account created successfully. You can now sign in.");
         setIsLogin(true);
         setPassword("");
       }
@@ -54,7 +50,7 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
         apiErr?.data?.message ||
         apiErr?.error ||
         "An unexpected error occurred. Please try again.";
-      setErrorMessage(msg);
+      toast.error(msg);
     }
   };
 
@@ -92,8 +88,6 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
               type="button"
               onClick={() => {
                 setIsLogin(true);
-                setErrorMessage(null);
-                setSuccessMessage(null);
               }}
               className={`py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
                 isLogin
@@ -107,8 +101,6 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
               type="button"
               onClick={() => {
                 setIsLogin(false);
-                setErrorMessage(null);
-                setSuccessMessage(null);
               }}
               className={`py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
                 !isLogin
@@ -123,40 +115,6 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
 
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4 pt-2">
-            {errorMessage && (
-              <div className="flex items-center justify-between gap-2 p-3 text-xs rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 animate-in fade-in duration-200">
-                <div className="flex items-center gap-2">
-                  <ShieldAlert className="h-4 w-4 shrink-0" />
-                  <span>{errorMessage}</span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setErrorMessage(null)}
-                  className="h-6 w-6 rounded-md flex items-center justify-center text-red-400 hover:text-red-200 hover:bg-red-500/20 active:scale-95 transition-all cursor-pointer"
-                  aria-label="Dismiss error"
-                >
-                  <X className="h-3.5 w-3.5" strokeWidth={2.2} />
-                </button>
-              </div>
-            )}
-
-            {successMessage && (
-              <div className="flex items-center justify-between gap-2 p-3 text-xs rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 animate-in fade-in duration-200">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 shrink-0" />
-                  <span>{successMessage}</span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setSuccessMessage(null)}
-                  className="h-6 w-6 rounded-md flex items-center justify-center text-emerald-400 hover:text-emerald-200 hover:bg-emerald-500/20 active:scale-95 transition-all cursor-pointer"
-                  aria-label="Dismiss notification"
-                >
-                  <X className="h-3.5 w-3.5" strokeWidth={2.2} />
-                </button>
-              </div>
-            )}
-
             {!isLogin && (
               <div className="space-y-1.5">
                 <Label htmlFor="name">Full Name</Label>

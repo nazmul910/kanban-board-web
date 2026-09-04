@@ -16,9 +16,8 @@ import {
   UserPlus,
   Trash2,
   Shield,
-  CheckCircle2,
-  AlertCircle,
 } from "lucide-react";
+import { toast } from "sonner";
 
 interface ShareBoardModalProps {
   board: IBoard;
@@ -35,11 +34,6 @@ export function ShareBoardModal({
 }: ShareBoardModalProps) {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState<BoardRole>("EDITOR");
-  const [feedback, setFeedback] = useState<{
-    type: "success" | "error";
-    message: string;
-  } | null>(null);
-
   const [shareBoard, { isLoading: isSharing }] = useShareBoardMutation();
   const [updateRole] = useUpdateMemberRoleMutation();
   const [removeMember] = useRemoveMemberMutation();
@@ -48,7 +42,6 @@ export function ShareBoardModal({
 
   const handleShare = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFeedback(null);
     if (!email.trim()) return;
 
     try {
@@ -57,17 +50,11 @@ export function ShareBoardModal({
         email: email.trim(),
         role,
       }).unwrap();
-      setFeedback({
-        type: "success",
-        message: `Board shared with ${email} as ${role}!`,
-      });
+      toast.success(`Board shared with ${email} as ${role}.`);
       setEmail("");
     } catch (err: unknown) {
       const errorObj = err as { data?: { message?: string } };
-      setFeedback({
-        type: "error",
-        message: errorObj?.data?.message || "Failed to share board",
-      });
+      toast.error(errorObj?.data?.message || "Failed to share board");
     }
   };
 
@@ -78,12 +65,10 @@ export function ShareBoardModal({
         memberId,
         role: newRole,
       }).unwrap();
+      toast.success("Member role updated.");
     } catch (err: unknown) {
       const errorObj = err as { data?: { message?: string } };
-      setFeedback({
-        type: "error",
-        message: errorObj?.data?.message || "Failed to update role",
-      });
+      toast.error(errorObj?.data?.message || "Failed to update role");
     }
   };
 
@@ -93,12 +78,10 @@ export function ShareBoardModal({
         boardId: board.id,
         memberId,
       }).unwrap();
+      toast.success("Member removed from the board.");
     } catch (err: unknown) {
       const errorObj = err as { data?: { message?: string } };
-      setFeedback({
-        type: "error",
-        message: errorObj?.data?.message || "Failed to remove member",
-      });
+      toast.error(errorObj?.data?.message || "Failed to remove member");
     }
   };
 
@@ -129,23 +112,6 @@ export function ShareBoardModal({
             Manage who has access to <strong className="text-gray-200">{board.title}</strong>
           </p>
         </div>
-
-        {feedback && (
-          <div
-            className={`p-3 rounded-xl text-xs flex items-center gap-2 ${
-              feedback.type === "success"
-                ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"
-                : "bg-red-500/10 text-red-400 border border-red-500/30"
-            }`}
-          >
-            {feedback.type === "success" ? (
-              <CheckCircle2 className="h-4 w-4 shrink-0" />
-            ) : (
-              <AlertCircle className="h-4 w-4 shrink-0" />
-            )}
-            <span>{feedback.message}</span>
-          </div>
-        )}
 
         {isOwner ? (
           <form onSubmit={handleShare} className="space-y-3 pt-2">

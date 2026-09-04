@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useAppSelector } from "../../redux/hooks";
 import { useLogoutMutation } from "../../redux/features/auth/authApi";
 import { Button } from "../ui/button";
-import { Badge } from "../ui/badge";
 import { ConfirmModal } from "../ui/confirm-modal";
 import {
   Kanban,
@@ -18,6 +17,7 @@ import {
   Activity,
   ChevronDown,
 } from "lucide-react";
+import { toast } from "sonner";
 
 export function Navbar() {
   const { user } = useAppSelector((state) => state.auth);
@@ -60,11 +60,13 @@ export function Navbar() {
   const handleConfirmLogout = async () => {
     try {
       await logout().unwrap();
+      toast.success("Logged out successfully.");
       setIsLogoutModalOpen(false);
       setIsMobileMenuOpen(false);
       setIsDropdownOpen(false);
-    } catch (error) {
-      console.error("Logout failed:", error);
+    } catch (error: unknown) {
+      const errorObj = error as { data?: { message?: string } };
+      toast.error(errorObj?.data?.message || "Logout failed");
     }
   };
 
@@ -73,8 +75,6 @@ export function Navbar() {
     { name: "Boards", icon: Layers, href: "/" },
     { name: "Activity", icon: Activity, href: "/activity" },
   ];
-
-  const firstName = user?.name ? user.name.split(" ")[0] : "";
 
   return (
     <>

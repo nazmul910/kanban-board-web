@@ -13,7 +13,6 @@ import { Navbar } from "../components/layout/Navbar";
 import { BoardCard } from "../components/board/BoardCard";
 import { CreateBoardModal } from "../components/board/CreateBoardModal";
 import { Card, CardContent, CardHeader } from "../components/ui/card";
-import { Badge } from "../components/ui/badge";
 import { Button } from "../components/ui/button";
 import { ConfirmModal } from "../components/ui/confirm-modal";
 import {
@@ -21,12 +20,12 @@ import {
   Kanban,
   Loader2,
   Plus,
-  CheckCircle2,
   Users,
   FolderKanban,
   LayoutDashboard,
 } from "lucide-react";
 import { IBoard } from "../redux/features/board/boardInterface";
+import { toast } from "sonner";
 
 export default function HomePage() {
   const router = useRouter();
@@ -222,6 +221,7 @@ export default function HomePage() {
         onConfirm={async () => {
           if (boardToDelete) {
             await deleteBoard(boardToDelete.id).unwrap();
+            toast.success("Board deleted successfully.");
             setBoardToDelete(null);
           }
         }}

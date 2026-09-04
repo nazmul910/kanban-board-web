@@ -42,6 +42,7 @@ import { ConfirmModal } from "../ui/confirm-modal";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Badge } from "../ui/badge";
+import { toast } from "sonner";
 import {
   Plus,
   Share2,
@@ -234,8 +235,10 @@ export function BoardWorkspace({
         destinationColumnId,
         destinationIndex,
       }).unwrap();
+      toast.success("Task moved successfully.");
     } catch (err) {
-      console.error("Failed to persist task movement:", err);
+      const errorObj = err as { data?: { message?: string } };
+      toast.error(errorObj?.data?.message || "Failed to move task");
       setColumns(board.columns || []);
     }
   };
@@ -250,8 +253,12 @@ export function BoardWorkspace({
         boardId: board.id,
         title: newColumnTitle.trim(),
       }).unwrap();
+      toast.success("Column added successfully.");
       setNewColumnTitle("");
       setIsAddingColumn(false);
+    } catch (err) {
+      const errorObj = err as { data?: { message?: string } };
+      toast.error(errorObj?.data?.message || "Failed to add column");
     } finally {
       setIsSubmittingColumn(false);
     }
@@ -259,10 +266,17 @@ export function BoardWorkspace({
 
   const handleSaveBoardTitle = async () => {
     if (boardTitle.trim() && boardTitle !== board.title) {
-      await updateBoard({
-        id: board.id,
-        title: boardTitle.trim(),
-      }).unwrap();
+      try {
+        await updateBoard({
+          id: board.id,
+          title: boardTitle.trim(),
+        }).unwrap();
+        toast.success("Board title updated.");
+      } catch (err) {
+        const errorObj = err as { data?: { message?: string } };
+        toast.error(errorObj?.data?.message || "Failed to update board title");
+        setBoardTitle(board.title);
+      }
     }
     setIsEditingBoardTitle(false);
   };
@@ -393,18 +407,30 @@ export function BoardWorkspace({
                 column={column}
                 canEdit={canEdit}
                 onAddTask={async (colId, title) => {
-                  await createTask({
-                    boardId: board.id,
-                    columnId: colId,
-                    title,
-                  }).unwrap();
+                  try {
+                    await createTask({
+                      boardId: board.id,
+                      columnId: colId,
+                      title,
+                    }).unwrap();
+                    toast.success("Task added successfully.");
+                  } catch (err) {
+                    const errorObj = err as { data?: { message?: string } };
+                    toast.error(errorObj?.data?.message || "Failed to add task");
+                  }
                 }}
                 onEditColumn={async (colId, title) => {
-                  await updateColumn({
-                    boardId: board.id,
-                    id: colId,
-                    title,
-                  }).unwrap();
+                  try {
+                    await updateColumn({
+                      boardId: board.id,
+                      id: colId,
+                      title,
+                    }).unwrap();
+                    toast.success("Column updated successfully.");
+                  } catch (err) {
+                    const errorObj = err as { data?: { message?: string } };
+                    toast.error(errorObj?.data?.message || "Failed to update column");
+                  }
                 }}
                 onDeleteColumn={(colId) => setColumnToDelete(colId)}
                 onEditTask={(task) => setEditingTask(task)}
@@ -486,12 +512,18 @@ export function BoardWorkspace({
         canEdit={canEdit}
         onClose={() => setEditingTask(null)}
         onSave={async (taskId, title, description) => {
-          await updateTask({
-            boardId: board.id,
-            id: taskId,
-            title,
-            description,
-          }).unwrap();
+          try {
+            await updateTask({
+              boardId: board.id,
+              id: taskId,
+              title,
+              description,
+            }).unwrap();
+            toast.success("Task updated successfully.");
+          } catch (err) {
+            const errorObj = err as { data?: { message?: string } };
+            toast.error(errorObj?.data?.message || "Failed to update task");
+          }
         }}
         onDelete={(task) => {
           setEditingTask(null);
@@ -517,11 +549,17 @@ export function BoardWorkspace({
         onClose={() => setTaskToDelete(null)}
         onConfirm={async () => {
           if (taskToDelete) {
-            await deleteTask({
-              boardId: board.id,
-              id: taskToDelete.id,
-            }).unwrap();
-            setTaskToDelete(null);
+            try {
+              await deleteTask({
+                boardId: board.id,
+                id: taskToDelete.id,
+              }).unwrap();
+              toast.success("Task deleted successfully.");
+              setTaskToDelete(null);
+            } catch (err) {
+              const errorObj = err as { data?: { message?: string } };
+              toast.error(errorObj?.data?.message || "Failed to delete task");
+            }
           }
         }}
         variant="destructive"
@@ -536,11 +574,17 @@ export function BoardWorkspace({
         onClose={() => setColumnToDelete(null)}
         onConfirm={async () => {
           if (columnToDelete) {
-            await deleteColumn({
-              boardId: board.id,
-              id: columnToDelete,
-            }).unwrap();
-            setColumnToDelete(null);
+            try {
+              await deleteColumn({
+                boardId: board.id,
+                id: columnToDelete,
+              }).unwrap();
+              toast.success("Column deleted successfully.");
+              setColumnToDelete(null);
+            } catch (err) {
+              const errorObj = err as { data?: { message?: string } };
+              toast.error(errorObj?.data?.message || "Failed to delete column");
+            }
           }
         }}
         variant="destructive"
@@ -554,9 +598,15 @@ export function BoardWorkspace({
         isOpen={isDeleteBoardModalOpen}
         onClose={() => setIsDeleteBoardModalOpen(false)}
         onConfirm={async () => {
-          await deleteBoard(board.id).unwrap();
-          setIsDeleteBoardModalOpen(false);
-          onBackToDashboard();
+          try {
+            await deleteBoard(board.id).unwrap();
+            toast.success("Board deleted successfully.");
+            setIsDeleteBoardModalOpen(false);
+            onBackToDashboard();
+          } catch (err) {
+            const errorObj = err as { data?: { message?: string } };
+            toast.error(errorObj?.data?.message || "Failed to delete board");
+          }
         }}
         variant="destructive"
         title="Delete Entire Board?"

@@ -5,8 +5,9 @@ import { useCreateBoardMutation } from "../../redux/features/board/boardApi";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { X, Kanban, Sparkles } from "lucide-react";
+import { X, Kanban } from "lucide-react";
 import { IBoard } from "../../redux/features/board/boardInterface";
+import { toast } from "sonner";
 
 interface CreateBoardModalProps {
   isOpen: boolean;
@@ -20,7 +21,6 @@ export function CreateBoardModal({
   onBoardCreated,
 }: CreateBoardModalProps) {
   const [title, setTitle] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const [createBoard, { isLoading }] = useCreateBoardMutation();
 
   if (!isOpen) return null;
@@ -29,17 +29,17 @@ export function CreateBoardModal({
     e.preventDefault();
     if (!title.trim()) return;
 
-    setError(null);
     try {
       const res = await createBoard({ title: title.trim() }).unwrap();
       setTitle("");
       onClose();
       if (res.data) {
+        toast.success("Board created successfully.");
         onBoardCreated(res.data);
       }
     } catch (err: unknown) {
       const errorObj = err as { data?: { message?: string } };
-      setError(errorObj?.data?.message || "Failed to create board");
+      toast.error(errorObj?.data?.message || "Failed to create board");
     }
   };
 
@@ -70,12 +70,6 @@ export function CreateBoardModal({
             <p className="text-xs text-gray-400">Set up a new workflow workspace</p>
           </div>
         </div>
-
-        {error && (
-          <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs">
-            {error}
-          </div>
-        )}
 
         <form onSubmit={handleSubmit} className="space-y-4 pt-1">
           <div className="space-y-1.5">
