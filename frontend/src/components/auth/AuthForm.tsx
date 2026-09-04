@@ -65,7 +65,7 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
         <CardHeader className="space-y-3 text-center pt-8 pb-4">
           <div className="flex justify-center items-center gap-2.5">
             <div className="h-10 w-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 emerald-glow-sm">
-              <Kanban className="h-5 w-5" />
+              <Kanban className="h-5 w-5 rotate-180" />
             </div>
             <span className="text-xl font-extrabold tracking-wider text-white">
               KANBAN
@@ -78,7 +78,7 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
             </CardTitle>
             <CardDescription className="text-gray-400 text-xs mt-1">
               {isLogin
-                ? "Enter your credentials to access your workspace"
+                ? "Sign in to continue managing your projects"
                 : "Register to collaborate and manage projects"}
             </CardDescription>
           </div>
