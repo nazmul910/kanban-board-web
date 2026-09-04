@@ -248,7 +248,6 @@ const deleteTask = async (userId: string, taskId: string) => {
   });
 
   await prisma.$transaction(async (tx) => {
-    // 1. Log Activity before deleting task
     await tx.activity.create({
       data: {
         userId,
@@ -258,12 +257,10 @@ const deleteTask = async (userId: string, taskId: string) => {
       },
     });
 
-    // 2. Delete the Task
     await tx.task.delete({
       where: { id: taskId },
     });
 
-    // 3. Shift remaining tasks positions down
     await tx.task.updateMany({
       where: {
         columnId: existingTask.columnId,
@@ -306,7 +303,6 @@ const moveTask = async (
   const sourceColumnTitle = task.column.title;
   const boardId = task.column.boardId;
 
-  // Check authorization on board
   const { role } = await BoardService.getUserBoardRole(userId, boardId);
   if (!role || (role !== Role.OWNER && role !== Role.EDITOR)) {
     throw new AppError(
@@ -315,7 +311,6 @@ const moveTask = async (
     );
   }
 
-  // Check destination column
   const destColumn = await prisma.column.findUnique({
     where: { id: destinationColumnId },
     select: {
@@ -343,9 +338,7 @@ const moveTask = async (
 
   const userName = user?.name || "User";
 
-  // Execute in Prisma Transaction
   const movedTask = await prisma.$transaction(async (tx) => {
-    // CASE 1: Moving within the SAME column
     if (sourceColumnId === destinationColumnId) {
       const sourceIndex = task.position;
 
@@ -354,7 +347,6 @@ const moveTask = async (
       }
 
       if (sourceIndex < destinationIndex) {
-        // Shift items between (sourceIndex, destinationIndex] up (decrement by 1)
         await tx.task.updateMany({
           where: {
             columnId: sourceColumnId,
@@ -370,7 +362,6 @@ const moveTask = async (
           },
         });
       } else {
-        // Shift items between [destinationIndex, sourceIndex) down (increment by 1)
         await tx.task.updateMany({
           where: {
             columnId: sourceColumnId,
@@ -387,7 +378,6 @@ const moveTask = async (
         });
       }
 
-      // Update target task position
       const updated = await tx.task.update({
         where: { id: taskId },
         data: {
@@ -401,7 +391,6 @@ const moveTask = async (
         },
       });
 
-      // Log Activity
       await tx.activity.create({
         data: {
           userId,
@@ -415,8 +404,6 @@ const moveTask = async (
       return updated;
     }
 
-    // CASE 2: Moving to a DIFFERENT column
-    // 1. Shift remaining tasks in source column down (decrement by 1)
     await tx.task.updateMany({
       where: {
         columnId: sourceColumnId,
@@ -431,7 +418,6 @@ const moveTask = async (
       },
     });
 
-    // 2. Shift tasks in destination column up (increment by 1) at and after destinationIndex
     await tx.task.updateMany({
       where: {
         columnId: destinationColumnId,
@@ -446,7 +432,6 @@ const moveTask = async (
       },
     });
 
-    // 3. Move the task to destination column and set position
     const updated = await tx.task.update({
       where: { id: taskId },
       data: {
@@ -461,7 +446,6 @@ const moveTask = async (
       },
     });
 
-    // 4. Log Activity
     await tx.activity.create({
       data: {
         userId,

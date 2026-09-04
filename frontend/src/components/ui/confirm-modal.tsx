@@ -92,7 +92,6 @@ export function ConfirmModal({
         aria-labelledby="confirm-modal-title"
         className="relative w-full max-w-md rounded-2xl border border-[#262f3a] bg-[#0d1117] p-6 shadow-2xl transition-all z-10 animate-in zoom-in-95 duration-200"
       >
-        {/* Top subtle highlight line */}
         <div
           className={`absolute top-0 left-0 right-0 h-1 rounded-t-2xl ${
             variant === "destructive"

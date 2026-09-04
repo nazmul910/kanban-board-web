@@ -33,7 +33,6 @@ export default function HomePage() {
   const { isLoading: isMeLoading } = useGetMeQuery();
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
 
-  // Queries
   const { data: boardsData, isLoading: isBoardsLoading } = useGetBoardsQuery(
     undefined,
     { skip: !isAuthenticated }
@@ -41,7 +40,6 @@ export default function HomePage() {
 
   const [deleteBoard] = useDeleteBoardMutation();
 
-  // Modals state
   const [isCreateBoardOpen, setIsCreateBoardOpen] = useState(false);
   const [boardToDelete, setBoardToDelete] = useState<IBoard | null>(null);
 
@@ -115,7 +113,6 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Quick Metrics */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <Card className="border border-[#21262d] bg-[#0d1117]/80 hover:border-emerald-500/30 transition-all duration-200">
                 <CardHeader className="p-5 pb-2">
@@ -156,7 +153,6 @@ export default function HomePage() {
               </Card>
             </div>
 
-            {/* User Boards List */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="text-base font-bold text-white flex items-center gap-2">
@@ -212,7 +208,6 @@ export default function HomePage() {
         )}
       </main>
 
-      {/* Create Board Modal */}
       <CreateBoardModal
         isOpen={isCreateBoardOpen}
         onClose={() => setIsCreateBoardOpen(false)}
@@ -221,7 +216,6 @@ export default function HomePage() {
         }}
       />
 
-      {/* Confirm Delete Board Modal */}
       <ConfirmModal
         isOpen={!!boardToDelete}
         onClose={() => setBoardToDelete(null)}

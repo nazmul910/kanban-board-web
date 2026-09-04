@@ -69,7 +69,6 @@ export function BoardWorkspace({
   const userRole: BoardRole = isOwner ? "OWNER" : userMember?.role || "VIEWER";
   const canEdit = userRole === "OWNER" || userRole === "EDITOR";
 
-  // Mutations
   const [createColumn] = useCreateColumnMutation();
   const [updateColumn] = useUpdateColumnMutation();
   const [deleteColumn] = useDeleteColumnMutation();

@@ -52,7 +52,6 @@ export function CreateBoardModal({
       />
 
       <div className="relative w-full max-w-md rounded-2xl border border-[#262f3a] bg-[#0d1117] p-6 shadow-2xl z-10 animate-in zoom-in-95 duration-200 space-y-4">
-        {/* Professional Cross Close Icon */}
         <button
           type="button"
           onClick={onClose}

@@ -35,7 +35,6 @@ const getUserBoardRole = async (userId: string, boardId: string) => {
 
 const createBoard = async (userId: string, payload: ICreateBoard) => {
   const result = await prisma.$transaction(async (tx) => {
-    // 1. Create Board
     const board = await tx.board.create({
       data: {
         title: payload.title,
@@ -52,7 +51,6 @@ const createBoard = async (userId: string, payload: ICreateBoard) => {
       },
     });
 
-    // 2. Create Default Columns
     const defaultColumns = [
       { title: "To Do", position: 0, boardId: board.id },
       { title: "In Progress", position: 1, boardId: board.id },
@@ -63,7 +61,6 @@ const createBoard = async (userId: string, payload: ICreateBoard) => {
       data: defaultColumns,
     });
 
-    // 3. Log Activity
     await tx.activity.create({
       data: {
         userId,
@@ -73,7 +70,6 @@ const createBoard = async (userId: string, payload: ICreateBoard) => {
       },
     });
 
-    // Fetch board with columns
     const boardWithColumns = await tx.board.findUnique({
       where: { id: board.id },
       include: {
@@ -388,7 +384,6 @@ const removeMember = async (
     throw new AppError(404, "Board member not found on this board");
   }
 
-  // Either board OWNER can remove members, or a member can leave themselves
   const isOwner = role === Role.OWNER;
   const isSelf = existingMember.userId === userId;
 

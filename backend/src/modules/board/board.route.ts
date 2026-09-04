@@ -39,7 +39,6 @@ router.delete(
   BoardController.deleteBoard
 );
 
-// Board Sharing & Member Management
 router.post(
   "/:id/members",
   verifyToken,
@@ -60,7 +59,6 @@ router.delete(
   BoardController.removeMember
 );
 
-// Board Activities
 router.get(
   "/:boardId/activities",
   verifyToken,

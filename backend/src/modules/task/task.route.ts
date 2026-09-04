@@ -33,7 +33,6 @@ router.delete(
   TaskController.deleteTask
 );
 
-// Task Movement & Reordering (Same column or across columns)
 router.patch(
   "/:id/move",
   verifyToken,
@@ -41,7 +40,6 @@ router.patch(
   TaskController.moveTask
 );
 
-// Task Activities
 router.get(
   "/:taskId/activities",
   verifyToken,

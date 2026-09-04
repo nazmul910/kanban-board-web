@@ -20,12 +20,11 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
 
   const isProduction = config.env === "production";
 
-  // Set JWT in HTTP-Only Cookie
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
     secure: isProduction,
     sameSite: isProduction ? "none" : "lax",
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in ms
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
   sendResponse(res, {
@@ -42,7 +41,6 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
 const logoutUser = catchAsync(async (req: Request, res: Response) => {
   const isProduction = config.env === "production";
 
-  // Clear HTTP-Only Cookie
   res.clearCookie("accessToken", {
     httpOnly: true,
     secure: isProduction,

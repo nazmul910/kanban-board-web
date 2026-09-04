@@ -23,7 +23,6 @@ export function ActivityDrawer({ boardId, isOpen, onClose }: ActivityDrawerProps
         isOpen ? "pointer-events-auto visible" : "pointer-events-none invisible"
       }`}
     >
-      {/* Backdrop */}
       <div
         onClick={onClose}
         className={`fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity duration-300 ease-in-out ${
@@ -32,13 +31,11 @@ export function ActivityDrawer({ boardId, isOpen, onClose }: ActivityDrawerProps
         aria-hidden="true"
       />
 
-      {/* Drawer */}
       <div
         className={`fixed inset-y-0 right-0 w-[380px] max-w-[90vw] bg-[#0d1117] border-l border-[#21262d] shadow-2xl flex flex-col justify-between z-10 transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        {/* Header */}
         <div className="p-4 border-b border-[#21262d] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="h-8 w-8 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 emerald-glow-sm">
@@ -60,7 +57,6 @@ export function ActivityDrawer({ boardId, isOpen, onClose }: ActivityDrawerProps
           </button>
         </div>
 
-        {/* Content */}
         <div className="flex-1 overflow-y-auto p-4 space-y-3">
           {isLoading ? (
             <div className="flex flex-col items-center justify-center h-48 text-gray-400 gap-2">

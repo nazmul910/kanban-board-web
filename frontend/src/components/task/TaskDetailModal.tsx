@@ -59,7 +59,6 @@ export function TaskDetailModal({
       />
 
       <div className="relative w-full max-w-lg rounded-2xl border border-[#262f3a] bg-[#0d1117] p-6 shadow-2xl z-10 animate-in zoom-in-95 duration-200">
-        {/* Professional Cross Close Icon */}
         <button
           type="button"
           onClick={onClose}
@@ -78,7 +77,6 @@ export function TaskDetailModal({
             <span className="text-gray-600 font-mono">#{task.id.slice(0, 6)}</span>
           </div>
 
-          {/* Title Input */}
           <div className="space-y-1.5">
             <Label htmlFor="task-title">Title</Label>
             <Input
@@ -92,7 +90,6 @@ export function TaskDetailModal({
             />
           </div>
 
-          {/* Description Input */}
           <div className="space-y-1.5">
             <Label htmlFor="task-description" className="flex items-center gap-1.5">
               <AlignLeft className="h-3.5 w-3.5" />
@@ -109,7 +106,6 @@ export function TaskDetailModal({
             />
           </div>
 
-          {/* Metadata info */}
           <div className="pt-2 border-t border-[#21262d] grid grid-cols-2 gap-3 text-[11px] text-gray-400">
             <div className="flex items-center gap-2">
               <UserIcon className="h-3.5 w-3.5 text-emerald-400" />
@@ -121,7 +117,6 @@ export function TaskDetailModal({
             </div>
           </div>
 
-          {/* Footer Actions */}
           <div className="pt-4 border-t border-[#21262d] flex items-center justify-between">
             {canEdit ? (
               <Button

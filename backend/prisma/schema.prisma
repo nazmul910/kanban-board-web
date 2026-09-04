@@ -21,7 +21,6 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relations
   ownedBoards   Board[]       @relation("BoardOwner")
   boardMembers  BoardMember[]
   createdTasks  Task[]        @relation("TaskCreatedBy")
@@ -37,7 +36,6 @@ model Board {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relations
   owner      User          @relation("BoardOwner", fields: [ownerId], references: [id], onDelete: Cascade)
   members    BoardMember[]
   columns    Column[]
@@ -54,7 +52,6 @@ model BoardMember {
   role      Role     @default(VIEWER)
   createdAt DateTime @default(now())
 
-  // Relations
   board Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -72,7 +69,6 @@ model Column {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relations
   board Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
   tasks Task[]
 
@@ -90,7 +86,6 @@ model Task {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  // Relations
   column      Column     @relation(fields: [columnId], references: [id], onDelete: Cascade)
   createdBy   User       @relation("TaskCreatedBy", fields: [createdById], references: [id])
   activities  Activity[]
@@ -109,7 +104,6 @@ model Activity {
   details   String?
   createdAt DateTime @default(now())
 
-  // Relations
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   task  Task? @relation(fields: [taskId], references: [id], onDelete: SetNull)
   board Board @relation(fields: [boardId], references: [id], onDelete: Cascade)

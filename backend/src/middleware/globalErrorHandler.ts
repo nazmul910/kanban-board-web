@@ -15,7 +15,6 @@ const globalErrorHandler: ErrorRequestHandler = (
   let message = "Something went wrong";
   let errorDetails: unknown = error;
 
-  // Custom AppError
   if (error instanceof AppError) {
     statusCode = error.statusCode;
     message = error.message;
@@ -23,7 +22,6 @@ const globalErrorHandler: ErrorRequestHandler = (
       message: error.message,
     };
   }
-  // Zod Validation Error
   else if (error instanceof ZodError) {
     statusCode = 400;
     message = "Validation Error";
@@ -32,7 +30,6 @@ const globalErrorHandler: ErrorRequestHandler = (
       message: issue.message,
     }));
   }
-  // JWT Errors
   else if (error instanceof jwt.TokenExpiredError) {
     statusCode = 401;
     message = "Token has expired! Please login again.";
@@ -49,7 +46,6 @@ const globalErrorHandler: ErrorRequestHandler = (
       message: error.message,
     };
   }
-  // Prisma Validation Error
   else if (error instanceof Prisma.PrismaClientValidationError) {
     statusCode = 400;
     message = "Invalid database request";
@@ -57,7 +53,6 @@ const globalErrorHandler: ErrorRequestHandler = (
       message: error.message,
     };
   }
-  // Prisma Known Request Error
   else if (error instanceof Prisma.PrismaClientKnownRequestError) {
     if (error.code === "P2002") {
       statusCode = 409;
@@ -81,7 +76,6 @@ const globalErrorHandler: ErrorRequestHandler = (
       };
     }
   }
-  // Generic Error
   else if (error instanceof Error) {
     message = error.message;
     errorDetails = {

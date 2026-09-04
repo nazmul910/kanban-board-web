@@ -241,22 +241,16 @@ FRONTEND_URL=http://localhost:3000
 ## 🚀 Installation & Running the Project
 
 ```bash
-# 1. Navigate to backend
 cd backend
 
-# 2. Install dependencies
 npm install
 
-# 3. Apply database migrations
 npx prisma migrate dev --name init
 
-# 4. Generate Prisma Client
 npx prisma generate
 
-# 5. Start Development Server with Hot-Reload
 npm run dev
 
-# 6. Build and Run Production Bundle
 npm run build
 npm start
 ```
@@ -359,7 +353,7 @@ Base URL: `http://localhost:5000/api` (or `/api/v1`)
   ```json
   {
     "email": "colleague@example.com",
-    "role": "EDITOR" // "OWNER" | "EDITOR" | "VIEWER"
+    "role": "EDITOR"
   }
   ```
 - **Permission**: `OWNER` only

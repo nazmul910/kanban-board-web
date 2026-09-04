@@ -86,7 +86,6 @@ export function KanbanColumn({
           : "border-[#21262d]"
       }`}
     >
-      {/* Column Header */}
       <div className="p-3.5 pb-2.5 border-b border-[#21262d] flex items-center justify-between gap-2">
         {isEditingTitle ? (
           <div className="flex items-center gap-1.5 flex-1">
@@ -156,7 +155,6 @@ export function KanbanColumn({
         )}
       </div>
 
-      {/* Task List (Droppable & Sortable) */}
       <div className="flex-1 p-3 space-y-2.5 overflow-y-auto max-h-[calc(100vh-270px)] min-h-[140px]">
         <SortableContext
           items={taskIds}
@@ -186,7 +184,6 @@ export function KanbanColumn({
         )}
       </div>
 
-      {/* Column Footer: Add Task Button / Form */}
       {canEdit && (
         <div className="p-3 pt-1 border-t border-[#21262d]/50">
           {isAddingTask ? (

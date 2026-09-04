@@ -58,7 +58,6 @@ export function TaskCard({
           : "border-[#262f3a] bg-[#161b22]/90 hover:border-emerald-500/40 hover:bg-[#1a212b] shadow-sm hover:shadow-md"
       }`}
     >
-      {/* Top row: Drag Handle, Title, Quick Actions */}
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-start gap-2 flex-1 min-w-0">
           {canEdit && (
@@ -85,7 +84,6 @@ export function TaskCard({
           </div>
         </div>
 
-        {/* Action icons */}
         {canEdit && !isOverlay && (
           <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
             <button
@@ -116,7 +114,6 @@ export function TaskCard({
         )}
       </div>
 
-      {/* Footer: User avatar / ID */}
       <div className="mt-3 pt-2.5 border-t border-[#21262d] flex items-center justify-between text-[10px] text-gray-400">
         <div className="flex items-center gap-1.5">
           <div className="h-5 w-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[9px]">

@@ -44,7 +44,6 @@ export function Navbar() {
     };
   }, [isMobileMenuOpen]);
 
-  // Close profile dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -212,7 +211,6 @@ export function Navbar() {
             isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
-          {/* Drawer Header */}
           <div className="p-4 border-b border-[#21262d] flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <div className="h-8 w-8 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 emerald-glow-sm">

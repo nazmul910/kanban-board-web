@@ -33,7 +33,6 @@ export default function ActivityPage() {
   const [selectedBoardId, setSelectedBoardId] = useState<string>("");
   const [selectedFilter, setSelectedFilter] = useState<string>("ALL");
 
-  // Effective board ID
   const activeBoardId = selectedBoardId || boards[0]?.id || "";
 
   const { data: activitiesData, isLoading: isActivitiesLoading } =
@@ -105,7 +104,6 @@ export default function ActivityPage() {
       <Navbar />
 
       <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full space-y-6">
-        {/* Header toolbar */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-6 rounded-2xl bg-[#0d1117]/90 border border-[#21262d] shadow-xl backdrop-blur-md">
           <div className="flex items-center gap-3">
             <button
@@ -129,7 +127,6 @@ export default function ActivityPage() {
             </div>
           </div>
 
-          {/* Board Selector */}
           {boards.length > 0 && (
             <div className="flex items-center gap-2">
               <FolderKanban className="h-4 w-4 text-gray-400" />
@@ -148,7 +145,6 @@ export default function ActivityPage() {
           )}
         </div>
 
-        {/* Filter Pills */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1">
           <span className="text-xs font-semibold text-gray-500 flex items-center gap-1 shrink-0">
             <Filter className="h-3.5 w-3.5" />
@@ -177,7 +173,6 @@ export default function ActivityPage() {
           ))}
         </div>
 
-        {/* Activity Feed */}
         {boards.length === 0 ? (
           <Card className="border border-dashed border-[#262f3a] bg-[#0d1117]/50 p-12 text-center">
             <p className="text-sm text-gray-400">

@@ -60,12 +60,10 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
 
   return (
     <div className="w-full max-w-md mx-auto relative z-10">
-      {/* Subtle ambient lighting */}
       <div className="absolute -top-10 -left-10 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <Card className="border border-[#262f3a] bg-[#0d1117]/95 shadow-2xl backdrop-blur-xl relative overflow-hidden">
-        {/* Top emerald accent line */}
         <div className="h-1 w-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-teal-400" />
 
         <CardHeader className="space-y-3 text-center pt-8 pb-4">
@@ -89,7 +87,6 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
             </CardDescription>
           </div>
 
-          {/* Mode Switcher Tabs */}
           <div className="grid grid-cols-2 p-1 rounded-xl bg-[#161b22] border border-[#262f3a] mt-2">
             <button
               type="button"
@@ -126,7 +123,6 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
 
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4 pt-2">
-            {/* Feedback Banners with Professional Dismiss Cross Icon */}
             {errorMessage && (
               <div className="flex items-center justify-between gap-2 p-3 text-xs rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 animate-in fade-in duration-200">
                 <div className="flex items-center gap-2">
@@ -161,7 +157,6 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
               </div>
             )}
 
-            {/* Name input for registration */}
             {!isLogin && (
               <div className="space-y-1.5">
                 <Label htmlFor="name">Full Name</Label>
@@ -180,7 +175,6 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
               </div>
             )}
 
-            {/* Email input */}
             <div className="space-y-1.5">
               <Label htmlFor="email">Email Address</Label>
               <div className="relative">
@@ -197,7 +191,6 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
               </div>
             </div>
 
-            {/* Password input */}
             <div className="space-y-1.5">
               <Label htmlFor="password">Password</Label>
               <div className="relative">

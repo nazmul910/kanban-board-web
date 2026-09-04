@@ -111,7 +111,6 @@ export function ShareBoardModal({
       />
 
       <div className="relative w-full max-w-lg rounded-2xl border border-[#262f3a] bg-[#0d1117] p-6 shadow-2xl z-10 animate-in zoom-in-95 duration-200 space-y-5">
-        {/* Professional Cross Close Icon */}
         <button
           type="button"
           onClick={onClose}
@@ -131,7 +130,6 @@ export function ShareBoardModal({
           </p>
         </div>
 
-        {/* Feedback Message */}
         {feedback && (
           <div
             className={`p-3 rounded-xl text-xs flex items-center gap-2 ${
@@ -149,7 +147,6 @@ export function ShareBoardModal({
           </div>
         )}
 
-        {/* Invite Form (only for OWNER) */}
         {isOwner ? (
           <form onSubmit={handleShare} className="space-y-3 pt-2">
             <Label htmlFor="share-email">Invite New Collaborator</Label>
@@ -189,14 +186,12 @@ export function ShareBoardModal({
           </p>
         )}
 
-        {/* Members List */}
         <div className="space-y-2.5 pt-2 border-t border-[#21262d]">
           <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400">
             Active Members ({1 + (board.members?.length || 0)})
           </span>
 
           <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
-            {/* Owner item */}
             <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#161b22] border border-[#262f3a]">
               <div className="flex items-center gap-2.5">
                 <div className="h-7 w-7 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold text-xs flex items-center justify-center">
@@ -216,7 +211,6 @@ export function ShareBoardModal({
               </Badge>
             </div>
 
-            {/* Other Members */}
             {board.members?.map((member) => (
               <div
                 key={member.id}
