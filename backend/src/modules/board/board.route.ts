@@ -3,6 +3,7 @@ import verifyToken from "../../middleware/verifyToken";
 import validateRequest from "../../middleware/validateRequest";
 import { BoardValidation } from "./board.validation";
 import { BoardController } from "./board.controller";
+import { ActivityController } from "../activity/activity.controller";
 
 const router = Router();
 
@@ -57,6 +58,13 @@ router.delete(
   "/:id/members/:memberId",
   verifyToken,
   BoardController.removeMember
+);
+
+// Board Activities
+router.get(
+  "/:boardId/activities",
+  verifyToken,
+  ActivityController.getBoardActivities
 );
 
 export const BoardRoutes = router;
