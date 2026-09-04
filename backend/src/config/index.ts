@@ -14,7 +14,9 @@ const config = {
     accessExpiresIn: process.env.JWT_ACCESS_EXPIRES_IN || "7d",
   },
   SaltRounds: Number(process.env.SALT_ROUNDS) || 12,
-  frontendUrl: process.env.FRONTEND_URL || "http://localhost:3000",
+  frontendUrl: (process.env.FRONTEND_URL || "http://localhost:3000")
+  .split(",")
+  .map((url) => url.trim()),
 };
 
 export default config;
