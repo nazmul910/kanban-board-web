@@ -49,7 +49,7 @@ export default function HomePage() {
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#090a0f] text-gray-200">
         <div className="relative flex flex-col items-center gap-4">
           <div className="h-14 w-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 emerald-glow">
-            <Kanban className="h-7 w-7 animate-pulse" />
+            <Kanban className="h-7 w-7 animate-pulse rotate-180" />
           </div>
           <div className="flex items-center gap-2 text-xs font-semibold text-emerald-400 tracking-wider">
             <Loader2 className="h-3.5 w-3.5 animate-spin" />
